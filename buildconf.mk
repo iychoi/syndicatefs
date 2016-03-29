@@ -8,13 +8,13 @@ BUILD_LIBEXEC_DIR := $(BUILD)/lib/syndicate
 BUILD_INCLUDEDIR := $(BUILD)/include/
 
 # install environment
+DESTDIR        ?= ""
 PREFIX         ?= /usr/local
-DESTDIR			?= /
-BINDIR         ?= $(PREFIX)/bin
-LIBDIR         ?= $(PREFIX)/lib
-LIBEXECDIR     ?= $(PREFIX)/lib/syndicate
-INCLUDEDIR     ?= $(PREFIX)/include
-PKGCONFIGDIR   ?= $(PREFIX)/lib/pkgconfig
+BINDIR         ?= $(DESTDIR)$(PREFIX)/bin
+LIBDIR         ?= $(DESTDIR)$(PREFIX)/lib
+LIBEXECDIR     ?= $(DESTDIR)$(PREFIX)/lib/syndicate
+INCLUDEDIR     ?= $(DESTDIR)$(PREFIX)/include
+PKGCONFIGDIR   ?= $(DESTDIR)$(PREFIX)/lib/pkgconfig
 
 # replica gateway 
 BUILD_UG    := $(BUILD_BINDIR)
