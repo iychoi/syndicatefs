@@ -7,9 +7,7 @@ Build-Depends: debhelper (>= 9), libattr1-dev, libfuse-dev, pkg-config, libsyndi
 
 Package: syndicatefs
 Architecture: any
-Pre-Depends: ${misc:PreDepends}
-Depends:  ${shlibs:Depends},
-          ${misc:Depends}
+Depends:  ${shlibs:Depends}, ${misc:Depends}
 Description: Syndicate Filesystem Client
  This is a user gateway that implements a FUSE filesystem. It lets you mount a
  Syndicate volume in your filesystem hierarchy.
