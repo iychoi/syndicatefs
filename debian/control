@@ -11,6 +11,6 @@ Pre-Depends: ${misc:PreDepends}
 Depends:  ${shlibs:Depends},
           ${misc:Depends}
 Description: Syndicate Filesystem Client
-  This is a user gateway that implements a FUSE filesystem. It lets you mount a
-  Syndicate volume in your filesystem hierarchy.
+ This is a user gateway that implements a FUSE filesystem. It lets you mount a
+ Syndicate volume in your filesystem hierarchy.
 
