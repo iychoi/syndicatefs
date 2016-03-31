@@ -1,6 +1,6 @@
 # build environment
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-BUILD    ?= $(ROOT_DIR)/build/out
+BUILD    ?= $(ROOT_DIR)/build
 DISTRO   ?= DEBIAN
 BUILD_BINDIR := $(BUILD)/bin
 BUILD_LIBDIR := $(BUILD)/lib
