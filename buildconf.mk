@@ -8,7 +8,7 @@ BUILD_LIBEXEC_DIR := $(BUILD)/lib/syndicate
 BUILD_INCLUDEDIR := $(BUILD)/include/
 
 # install environment
-DESTDIR        ?= ""
+DESTDIR        ?=
 PREFIX         ?= /usr/local
 BINDIR         ?= $(DESTDIR)$(PREFIX)/bin
 LIBDIR         ?= $(DESTDIR)$(PREFIX)/lib
@@ -16,9 +16,9 @@ LIBEXECDIR     ?= $(DESTDIR)$(PREFIX)/lib/syndicate
 INCLUDEDIR     ?= $(DESTDIR)$(PREFIX)/include
 PKGCONFIGDIR   ?= $(DESTDIR)$(PREFIX)/lib/pkgconfig
 
-# replica gateway 
+# replica gateway
 BUILD_UG    := $(BUILD_BINDIR)
-BUILD_UG_DIRS     := $(BUILD_UG) 
+BUILD_UG_DIRS     := $(BUILD_UG)
 
 # compiler
 CPPFLAGS := -std=c++11 -Wall -g -fPIC -fstack-protector -fstack-protector-all -pthread

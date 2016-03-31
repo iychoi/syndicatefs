@@ -17,15 +17,15 @@ DEFS := $(DEFS) -D_FILE_OFFSET_BITS=64
 all: $(UG_FUSE_BUILD)
 
 $(BUILD_UG)/$(UG_FUSE) : $(OBJ)
-	@mkdir -p "$(shell dirname "$@")"
+	mkdir -p "$(shell dirname "$@")"
 	$(CPP) -o "$@" $(INC) "$<" $(LIBINC) $(LIB)
 
 $(BUILD_UG)/$(OBJDIR)/%.o : %.c
-	@mkdir -p "$(shell dirname "$@")"
+	mkdir -p "$(shell dirname "$@")"
 	$(CPP) -o "$@" $(INC) -c "$<" $(DEFS)
 
 $(BUILD_UG)/$(OBJDIR)/%.o : %.cpp
-	@mkdir -p "$(shell dirname "$@")"
+	mkdir -p "$(shell dirname "$@")"
 	$(CPP) -o "$@" $(INC) -c "$<" $(DEFS)
 
 .PHONY: clean
@@ -36,12 +36,12 @@ clean:
 install: $(UG_FUSE_INSTALL)
 
 $(BINDIR)/%: $(BUILD_UG)/%
-	@mkdir "$(shell dirname "$@")"
-	@rm -f "$@"
-	@cp -a "$<" "$@"
+	mkdir -p "$(shell dirname "$@")"
+	rm -f "$@"
+	cp -a "$<" "$@"
 
 .PHONY: uninstall
 uninstall:
-	@rm -f $(UG_FUSE_INSTALL)
+	rm -f $(UG_FUSE_INSTALL)
 
 print-%: ; @echo $*=$($*)
