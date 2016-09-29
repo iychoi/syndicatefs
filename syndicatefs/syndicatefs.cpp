@@ -39,6 +39,10 @@ int UG_start_on_mount( struct fskit_fuse_state* fs_fuse, void* cls ) {
 
    int rc = 0;
    struct UG_state* ug = (struct UG_state*)cls;
+   struct SG_gateway* gateway = UG_state_gateway( ug );
+   
+   // disable UG's signal handlers 
+   SG_gateway_use_signal_handlers( gateway, false );
 
    rc = UG_start( ug );
    if( rc != 0 ) {
