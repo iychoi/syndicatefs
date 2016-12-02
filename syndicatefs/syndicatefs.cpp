@@ -80,7 +80,7 @@ int main( int argc, char** argv ) {
    }
 
    // set up the UG
-   ug = UG_init( argc, argv, false );
+   ug = UG_init( argc, argv);
    if( ug == NULL ) {
       
       SG_error("%s", "UG failed to initialize\n" );
