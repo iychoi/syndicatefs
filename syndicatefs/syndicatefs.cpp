@@ -72,9 +72,6 @@ int main( int argc, char** argv ) {
 
    int fuse_argc = 1;
 
-   // disable fskit debug messages
-   fskit_set_debug_level(0);
-
    // set up fskit-fuse
    fs_fuse = fskit_fuse_state_new();
    if( fs_fuse == NULL ) {
@@ -89,6 +86,9 @@ int main( int argc, char** argv ) {
       SG_error("%s", "UG failed to initialize\n" );
       exit(1);
    }
+
+   // disable fskit debug messages
+   fskit_set_debug_level(0);
 
    // consume the UG's args, so we can feed them into fskit
    first_arg_optind = SG_gateway_first_arg_optind( UG_state_gateway( ug ) );
