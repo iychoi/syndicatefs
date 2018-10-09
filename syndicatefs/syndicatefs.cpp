@@ -16,20 +16,20 @@
 
 #include "syndicatefs.h"
 
-// gateway main thread 
+// gateway main thread
 void* UG_main( void* arg ) {
 
    struct UG_state* ug = (struct UG_state*)arg;
    int rc = 0;
-   
+
    SG_debug("UG %p starting up\n", ug );
-   
+
    rc = UG_main( ug );
-   
+
    if( rc != 0 ) {
       SG_error("UG_main rc = %d\n", rc );
    }
-   
+
    return NULL;
 }
 
@@ -40,8 +40,8 @@ int UG_start_on_mount( struct fskit_fuse_state* fs_fuse, void* cls ) {
    int rc = 0;
    struct UG_state* ug = (struct UG_state*)cls;
    struct SG_gateway* gateway = UG_state_gateway( ug );
-   
-   // disable UG's signal handlers 
+
+   // disable UG's signal handlers
    SG_gateway_use_signal_handlers( gateway, false );
 
    rc = UG_start( ug );
@@ -53,9 +53,9 @@ int UG_start_on_mount( struct fskit_fuse_state* fs_fuse, void* cls ) {
    return rc;
 }
 
-// entry point 
+// entry point
 int main( int argc, char** argv ) {
-   
+
    int rc = 0;
    struct UG_state* ug = NULL;
    struct fskit_fuse_state* fs_fuse = NULL;
@@ -72,6 +72,9 @@ int main( int argc, char** argv ) {
 
    int fuse_argc = 1;
 
+   // disable fskit debug messages
+   fskit_set_debug_level(0);
+
    // set up fskit-fuse
    fs_fuse = fskit_fuse_state_new();
    if( fs_fuse == NULL ) {
@@ -82,12 +85,12 @@ int main( int argc, char** argv ) {
    // set up the UG
    ug = UG_init( argc, argv);
    if( ug == NULL ) {
-      
+
       SG_error("%s", "UG failed to initialize\n" );
       exit(1);
    }
 
-   // consume the UG's args, so we can feed them into fskit 
+   // consume the UG's args, so we can feed them into fskit
    first_arg_optind = SG_gateway_first_arg_optind( UG_state_gateway( ug ) );
    if( SG_gateway_foreground( UG_state_gateway(ug) ) ) {
 
@@ -102,8 +105,8 @@ int main( int argc, char** argv ) {
 
       SG_debug("FUSE argv[%d] = '%s'\n", i, fuse_argv[i]);
    }
-  
-   // bind the UG to fskit-fuse 
+
+   // bind the UG to fskit-fuse
    rc = fskit_fuse_init_fs( fs_fuse, UG_state_fs( ug ) );
    if( rc != 0 ) {
 
@@ -111,24 +114,24 @@ int main( int argc, char** argv ) {
       exit(1);
    }
 
-   // disable permissions checks--we enforce them ourselves 
+   // disable permissions checks--we enforce them ourselves
    fskit_fuse_setting_enable( fs_fuse, FSKIT_FUSE_NO_PERMISSIONS );
 
-   // start the UG on mount 
+   // start the UG on mount
    fskit_fuse_postmount_callback( fs_fuse, UG_start_on_mount, ug );
 
    // run the filesystem!
    rc = fskit_fuse_main( fs_fuse, fuse_argc, fuse_argv );
-   
+
    if( rc != 0 ) {
-      
+
       SG_error("fskit_fuse_main rc = %d\n", rc );
    }
-   
+
    // shut down
    SG_debug("%s", "Signaling gateway shutdown\n");
    SG_gateway_signal_main( UG_state_gateway( ug ) );
-   
+
    UG_shutdown( ug );
    fskit_fuse_detach_core( fs_fuse );        // because UG_shutdown destroyed it
    fskit_fuse_shutdown( fs_fuse, NULL );
